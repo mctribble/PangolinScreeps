@@ -1,4 +1,5 @@
-import { roomLog } from "utils/lib.log";
+import { RoomLog } from "utils/lib.log";
+import { Random } from "utils/random";
 
 /**
  * creates harvest flags for sources that currently have none
@@ -12,9 +13,9 @@ export const HarvestFlagProvider: FlagProvider = {
     createFlagsIfAbsent: function (room: Room) {
         _.forEach(room.find(FIND_SOURCES), source => {
             if (source.pos.lookFor("flag").length === 0) {
-                let newFlagName: string = Math.random().toString(36).slice(2).toString();
+                let newFlagName: string = Random.string();
                 source.pos.createFlag(newFlagName, COLOR_YELLOW, COLOR_GREY);
-                roomLog.debug(room, "FLAG_CREATION", "new harvest flag " + newFlagName + " at " + source.pos);
+                RoomLog.debug(room, "FLAG_CREATION", "new harvest flag " + newFlagName + " at " + source.pos);
             }
         });
     }
